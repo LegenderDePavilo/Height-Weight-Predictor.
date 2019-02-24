@@ -1,0 +1,62 @@
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity="all"
+%matplotlib inline
+
+import  matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets,linear_model
+import pandas as pd
+
+#Load csv and columns
+df=pd.read_csv("haw.csv", sep=',', header=None,engine='python')
+
+df.head()
+print("Are you male or female : ")
+d=input()
+
+if d=='m':
+    g=df[df[0]=='Male']
+else:
+    g=df[df[0]=='Female']
+
+y=g[2]
+x=g[1]
+x=x.values.reshape(len(x),1)
+y=y.values.reshape(len(y),1)
+
+#Split the data into traininig and testing parts
+x_train=x[:-250]
+x_test=x[-250:]
+
+#Split the target into training and testing parts
+y_train=y[:-250]
+y_test=y[-250:]
+
+#Plot outputs
+_=plt.scatter(x_test,y_test,color='black')
+_=plt.title('TestData')
+_=plt.xlabel('Size')
+_=plt.ylabel('Price')
+_=plt.xticks(())
+_=plt.yticks(())
+plt.show()
+
+#Create Linear Regression
+regr=linear_model.LinearRegression()
+
+#Train the model using the training sets
+regr.fit(x_train,y_train)
+
+#Plot outputs
+_=plt.scatter(x_test,y_test,color='black')
+_=plt.plot(x_test,regr.predict(x_test),color='red',linewidth=3)
+
+#Make an individual prediction
+print("Enter the height in inches : ")
+p=float(input())
+a=(str(regr.predict(p)))
+print("The predicted weight is : ",a)
+print(" pounds")
+regr.coef_
+regr.intercept_

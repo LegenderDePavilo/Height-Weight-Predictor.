@@ -1,0 +1,8 @@
+
+input : m OR f
+
+Height given : 67.5
+
+Output for male : 177.94879279
+
+Output for female : 155.92592153
